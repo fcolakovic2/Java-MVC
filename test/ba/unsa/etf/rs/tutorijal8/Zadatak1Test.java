@@ -32,7 +32,7 @@ class Zadatak1Test {
         assertAll(()->{
             assertEquals(1,drivers.size());
             assertEquals("Test",drivers.get(0).getName());
-            assertEquals(LocalDate.of(1997,2,11),drivers.get(0).getBirthday());
+            assertEquals(LocalDate.of(1997,2,11),drivers.get(0).getDateOfBirth());
         });
     }
 
@@ -67,8 +67,8 @@ class Zadatak1Test {
         ArrayList<Bus> busses = dao.getBusses();
         assertAll(()->{
             assertEquals(3,busses.size());
-            assertEquals("Isuzu",busses.get(1).getMaker());
-            assertEquals(59,busses.get(0).getSeatNumber());
+            assertEquals("Isuzu",busses.get(1).getProizvodjac());
+            assertEquals(59,busses.get(0).getnumberOfSeats());
         });
     }
 
@@ -87,8 +87,8 @@ class Zadatak1Test {
         ArrayList<Bus> busses = dao.getBusses();
         assertAll(()->{
             assertEquals(2,busses.size());
-            assertEquals("Icarbus",busses.get(1).getMaker());
-            assertEquals(47,busses.get(1).getSeatNumber());
+            assertEquals("Icarbus",busses.get(1).getProizvodjac());
+            assertEquals(47,busses.get(1).getnumberOfSeats());
         });
     }
 

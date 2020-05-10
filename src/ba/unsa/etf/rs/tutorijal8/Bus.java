@@ -56,7 +56,7 @@ public class Bus {
         this.id = id;
     }
 
-    public String getMaker() {
+    public String getProizvodjac() {
         return proizvodjac;
     }
 
@@ -72,7 +72,7 @@ public class Bus {
         this.serija = serija;
     }
 
-    public int getSeatNumber() {
+    public int getnumberOfSeats() {
         return numberOfSeats;
     }
 
@@ -85,7 +85,7 @@ public class Bus {
     @Override
     public String toString () {
         String s = "";
-        s += this.proizvodjac + " " + this.serija + " ( seats: " + this.getSeatNumber() + " )";
+        s += this.proizvodjac + " " + this.serija + " ( seats: " + this.getnumberOfSeats() + " )";
         if (firstDriver != null) {
             s += firstDriver.toString();
         }
