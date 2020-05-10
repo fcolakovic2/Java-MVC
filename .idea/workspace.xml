@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="421d7fb7-fab3-48c2-b140-ac993b300cb0" name="Default Changelist" comment="" />
+    <list default="true" id="421d7fb7-fab3-48c2-b140-ac993b300cb0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Bus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -84,7 +89,7 @@
       <updated>1557517057358</updated>
       <workItem from="1557517066080" duration="1612000" />
       <workItem from="1557652197101" duration="1267000" />
-      <workItem from="1589106170772" duration="226000" />
+      <workItem from="1589106170772" duration="604000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1557517574894</created>
@@ -100,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557652259211</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Napravljena klasa Driver sa podacima Drivera. Dodan ID kao primary key da lakse nastavimo sa zadatkom.">
+      <created>1589106575484</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1589106575484</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,17 +121,26 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Resetovanje baze prije svakog testiranja" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resetovanje baze prije svakog testiranja" />
+    <MESSAGE value="Napravljena klasa Driver sa podacima Drivera. Dodan ID kao primary key da lakse nastavimo sa zadatkom." />
+    <option name="LAST_COMMIT_MESSAGE" value="Napravljena klasa Driver sa podacima Drivera. Dodan ID kao primary key da lakse nastavimo sa zadatkom." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="213" key="#com.intellij.ide.util.MemberChooser" timestamp="1589106536023">
+    <state x="765" y="213" key="#com.intellij.ide.util.MemberChooser" timestamp="1589106744886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="213" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1589106536023" />
+    <state x="765" y="213" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1589106744886" />
     <state x="811" y="412" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1589106399117">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="811" y="412" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589106399117" />
+    <state x="522" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1589106736186">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="522" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589106736186" />
+    <state x="596" y="118" key="CommitChangelistDialog2" timestamp="1589106792903">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="596" y="118" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1589106792903" />
     <state x="440" y="97" key="SettingsEditor" timestamp="1589106395971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

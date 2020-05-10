@@ -7,7 +7,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,7 +50,7 @@ class Zadatak2Test {
         Driver driver = dao.getDrivers().get(1);
         Bus bus = dao.getBusses().get(0);
         assertAll(()->{
-            assertEquals(bus.getDriverOne(),driver);
+            assertEquals(bus.getFirstDriver(),driver);
         });
     }
 
@@ -93,7 +92,7 @@ class Zadatak2Test {
         System.out.println(outputHolder.toString());
         assertAll(()->{
             assertTrue(outputHolder.toString().contains(expected));
-            assertEquals(bus.getDriverOne(),driver);
+            assertEquals(bus.getFirstDriver(),driver);
         });
     }
 

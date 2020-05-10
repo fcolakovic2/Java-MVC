@@ -63,10 +63,10 @@ public class Main {
         int busIndex = tok.nextInt()-1;
         Bus bus = dao.getBusses().get(busIndex);
         int which = 1;
-        if(bus.getDriverOne()!=null && bus.getDriverTwo()!=null){
+        if(bus.getFirstDriver()!=null && bus.getDriverTwo()!=null){
             System.out.print("Umjesto kojeg vozača želite postaviti trenutnog(1 ili 2): ");
             which = tok.nextInt();
-        }else if(bus.getDriverOne()!=null){
+        }else if(bus.getFirstDriver()!=null){
             which = 2;
         }
         dao.dodijeliVozacuAutobus(driver,bus,which);
