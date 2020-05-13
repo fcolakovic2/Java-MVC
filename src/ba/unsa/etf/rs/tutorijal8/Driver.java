@@ -1,16 +1,20 @@
 package ba.unsa.etf.rs.tutorijal8;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Driver {
-    private Integer id;
-    private String Ime;
-    private String Prezime;
-    private String JMB;
-    private LocalDate dateOfBirth;
-    private LocalDate dateOfEmployment;
+    private SimpleIntegerProperty id=new SimpleIntegerProperty();
+    private SimpleStringProperty Ime=new SimpleStringProperty();
+    private SimpleStringProperty Prezime= new SimpleStringProperty();
+    private SimpleStringProperty JMB=new SimpleStringProperty();
+    private SimpleObjectProperty<LocalDate> dateOfBirth=new SimpleObjectProperty<>();
+    private SimpleObjectProperty<LocalDate> dateOfEmployment=new SimpleObjectProperty<>();
 
     public Driver() { }
 
