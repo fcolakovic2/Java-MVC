@@ -111,14 +111,5 @@ public class Bus {
 
     @Override
     public String toString() {
-        return "Bus{" +
-                "id=" + id +
-                ", proizvodjac=" + proizvodjac +
-                ", serija=" + serija +
-                ", numberOfSeats=" + numberOfSeats +
-                ", brojVozaca=" + brojVozaca +
-                ", FirstDriver=" + FirstDriver +
-                ", SecondDriver=" + SecondDriver +
-                '}';
-    }
+        return proizvodjac.get();
 }

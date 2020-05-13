@@ -16,82 +16,91 @@ public class Driver {
     private SimpleObjectProperty<LocalDate> dateOfBirth=new SimpleObjectProperty<>();
     private SimpleObjectProperty<LocalDate> dateOfEmployment=new SimpleObjectProperty<>();
 
-    public Driver() { }
-
-    public Driver(String ime, String prezime, String JMB, LocalDate dateOfBirth, LocalDate dateOfEmployment) {
-        this.Ime = ime;
+    public Driver(SimpleStringProperty ime, SimpleStringProperty prezime, SimpleStringProperty JMB, SimpleObjectProperty<LocalDate> dateOfBirth, SimpleObjectProperty<LocalDate> dateOfEmployment) {
+        Ime = ime;
         Prezime = prezime;
         this.JMB = JMB;
         this.dateOfBirth = dateOfBirth;
         this.dateOfEmployment = dateOfEmployment;
     }
 
-    public Driver(int id , String ime, String prezime, String JMB, LocalDate dateOfBirth, LocalDate dateOfEmployment) {
-        this.id = id;
-        this.Ime = ime;
-        Prezime = prezime;
-        this.JMB = JMB;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfEmployment = dateOfEmployment;
+    public Driver() {
     }
 
     public int getId() {
+        return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
-    public String getName() {
+    public String getIme() {
+        return Ime.get();
+    }
+
+    public SimpleStringProperty imeProperty() {
         return Ime;
     }
 
     public void setIme(String ime) {
-        Ime = ime;
+        this.Ime.set(ime);
     }
 
     public String getPrezime() {
+        return Prezime.get();
+    }
+
+    public SimpleStringProperty prezimeProperty() {
         return Prezime;
     }
 
     public void setPrezime(String prezime) {
-        Prezime = prezime;
+        this.Prezime.set(prezime);
     }
 
     public String getJMB() {
+        return JMB.get();
+    }
+
+    public SimpleStringProperty JMBProperty() {
         return JMB;
     }
 
     public void setJMB(String JMB) {
-        this.JMB = JMB;
+        this.JMB.set(JMB);
     }
 
     public LocalDate getDateOfBirth() {
+        return dateOfBirth.get();
+    }
+
+    public SimpleObjectProperty<LocalDate> dateOfBirthProperty() {
         return dateOfBirth;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth.set(dateOfBirth);
     }
 
     public LocalDate getDateOfEmployment() {
+        return dateOfEmployment.get();
+    }
+
+    public SimpleObjectProperty<LocalDate> dateOfEmploymentProperty() {
         return dateOfEmployment;
     }
 
     public void setDateOfEmployment(LocalDate dateOfEmployment) {
-        this.dateOfEmployment = dateOfEmployment;
+        this.dateOfEmployment.set(dateOfEmployment);
     }
 
     @Override
     public String toString() {
-        return  " - (" + this.getName() + " " + this.getPrezime() + " ( " + this.getJMB() + " ))";
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Driver)) return false;
-        Driver driver = (Driver) o;
-        return Objects.equals(getJMB(), driver.getJMB());
+        return Ime.get() + Prezime.get();
     }
 }
