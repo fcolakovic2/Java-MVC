@@ -1,5 +1,7 @@
 package ba.unsa.etf.rs.tutorijal8;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.sqlite.JDBC;
 import java.sql.*;
 import java.time.LocalDate;
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 public class TransportDAO {
     private static TransportDAO instance;
     private Connection conn;  //def konekcije
+    private ObservableList<Driver> sviDriveri = FXCollections.observableArrayList();
+    private ObservableList<Bus> buses = FXCollections.observableArrayList();
 
     private static PreparedStatement obrisiTrenutnogVozacaUpit, vratiSveVozaceUpit, vratiSveBuseveUpit, obrisiDodjeluVozacaUpit, ubaciuDodjeluUpit, vratiNarBusUpit, vratiNarDriveraUpit, obrisiSveDodjeleUpit, ubaciUDriveraUpit, obrisiTrenutniBusUpit, obrisiSveBuseveUpit, obrisiDodjeluBusaUpit,
             ubaciuBusUpit, obrisiSveVozaceUpit, vratiVozaceDodijeljeneUpit;   //def upita
@@ -66,25 +70,25 @@ public class TransportDAO {
     }
 
 
-    public ArrayList<Driver> getDrivers() {
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
+
+    public ObservableList<Driver> getDrivers() {
         ResultSet sviVozaci = null;
         try {
             sviVozaci = vratiSveVozaceUpit.executeQuery();
             Driver driver;
             while ((driver = dajVozaceUpit(sviVozaci))!=null)   //samo vratit sve drivere iz querya
             {
-                drivers.add(driver);
+                sviDriveri.add(driver);
             }
             sviVozaci.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return drivers;
+        return sviDriveri;
     }
 
     public void addDriver(Driver driver){
-        ArrayList<Driver> listDrivera = getDrivers();
+        ObservableList<Driver> listDrivera = getDrivers();
         if(listDrivera.contains(driver)) {
             throw new IllegalArgumentException("Taj vozač već postoji!");
         }                 //vraceni svi dosadasnji driveri, provjera da li postoji vozac koji se unosi
@@ -124,8 +128,7 @@ public class TransportDAO {
     }
 
 
-    public ArrayList<Bus> getBusses() {
-        ArrayList<Bus> buses = new ArrayList<>();
+    public ObservableList<Bus> getBusses() {
         try {
             ResultSet busevi = vratiSveBuseveUpit.executeQuery();
             while(busevi.next()) {

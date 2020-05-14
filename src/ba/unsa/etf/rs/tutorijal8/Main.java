@@ -11,12 +11,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        TransportDAO transDAO = TransportDAO.getInstance();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/baza.fxml"));
-        TransportController ctrl = new TransportController();
-        loader.setController(ctrl);
-        Parent root = loader.load();
-        primaryStage.setTitle("VozaciApp");
-        primaryStage.setScene(new Scene(root));
+        loader.setController(new TransportController(transDAO));
+        primaryStage.setTitle("Tutorijal 8");
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(loader.load(), 500, 300));
         primaryStage.show();
     }
 

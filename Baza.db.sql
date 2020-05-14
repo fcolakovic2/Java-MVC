@@ -23,5 +23,4 @@ CREATE TABLE IF NOT EXISTS "Vozac" (
 
 	CONSTRAINT "VozacPk" PRIMARY KEY("vozac_id")
 );
-
 COMMIT;
