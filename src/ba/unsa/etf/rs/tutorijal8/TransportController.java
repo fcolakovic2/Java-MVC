@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 public class TransportController {
     public ListView listaBuseva;
     public ListView listaVozaca;
+    public TextField imeVozaca;
     private TransportDAO dao;
     public Button napustiDugme;
     public Button potvrdaButton;
@@ -21,6 +22,15 @@ public class TransportController {
       dao=TransportDAO.getInstance();
       listaBuseva.setItems(dao.vratiSveBuseve());
       listaVozaca.setItems(dao.vratiSveDrivere());
+
+      listaVozaca.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) ->{
+
+      });
+
+
+      listaBuseva.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) ->{
+
+      });
     }
 
     public void napustiDugme(ActionEvent actionEvent) {
