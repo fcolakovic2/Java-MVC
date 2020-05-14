@@ -1,7 +1,5 @@
 package ba.unsa.etf.rs.tutorijal8;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.sqlite.JDBC;
 import java.sql.*;
 import java.time.LocalDate;
@@ -10,8 +8,6 @@ import java.util.ArrayList;
 public class TransportDAO {
     private static TransportDAO instance;
     private Connection conn;  //def konekcije
-    private ObservableList<Driver> sviDriveri = FXCollections.observableArrayList();
-    private ObservableList<Bus> buses = FXCollections.observableArrayList();
 
     private static PreparedStatement obrisiTrenutnogVozacaUpit, vratiSveVozaceUpit, vratiSveBuseveUpit, obrisiDodjeluVozacaUpit, ubaciuDodjeluUpit, vratiNarBusUpit, vratiNarDriveraUpit, obrisiSveDodjeleUpit, ubaciUDriveraUpit, obrisiTrenutniBusUpit, obrisiSveBuseveUpit, obrisiDodjeluBusaUpit,
             ubaciuBusUpit, obrisiSveVozaceUpit, vratiVozaceDodijeljeneUpit;   //def upita
@@ -70,25 +66,25 @@ public class TransportDAO {
     }
 
 
-
-    public ObservableList<Driver> getDrivers() {
+    public ArrayList<Driver> getDrivers() {
+        ArrayList<Driver> drivers = new ArrayList<Driver>();
         ResultSet sviVozaci = null;
         try {
             sviVozaci = vratiSveVozaceUpit.executeQuery();
             Driver driver;
             while ((driver = dajVozaceUpit(sviVozaci))!=null)   //samo vratit sve drivere iz querya
             {
-                sviDriveri.add(driver);
+                drivers.add(driver);
             }
             sviVozaci.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return sviDriveri;
+        return drivers;
     }
 
-    public boolean addDriver(Driver driver){
-        ObservableList<Driver> listDrivera = getDrivers();
+    public void addDriver(Driver driver){
+        ArrayList<Driver> listDrivera = getDrivers();
         if(listDrivera.contains(driver)) {
             throw new IllegalArgumentException("Taj vozač već postoji!");
         }                 //vraceni svi dosadasnji driveri, provjera da li postoji vozac koji se unosi
@@ -106,15 +102,13 @@ public class TransportDAO {
             ubaciUDriveraUpit.setDate(5 , Date.valueOf((driver.getDateOfBirth())));  //konverzija u obicni Date jer getDateOfBirth vraca LocalDate
             ubaciUDriveraUpit.setDate(6 , Date.valueOf((driver.getDateOfEmployment())));
             ubaciUDriveraUpit.executeUpdate();
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new IllegalArgumentException("Taj vozač već postoji!");
         }
     }
 
 
-    public boolean addBus(Bus bus) {
+    public void addBus(Bus bus) {
         try {
             ResultSet busevi = vratiNarBusUpit.executeQuery();
             int id = 1;
@@ -124,15 +118,14 @@ public class TransportDAO {
             ubaciuBusUpit.setString(3, bus.getSerija());  //popunjavanje upita za bus
             ubaciuBusUpit.setInt(4, bus.getnumberOfSeats());
             ubaciuBusUpit.executeUpdate();
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
 
-    public ObservableList<Bus> getBusses() {
+    public ArrayList<Bus> getBusses() {
+        ArrayList<Bus> buses = new ArrayList<>();
         try {
             ResultSet busevi = vratiSveBuseveUpit.executeQuery();
             while(busevi.next()) {
