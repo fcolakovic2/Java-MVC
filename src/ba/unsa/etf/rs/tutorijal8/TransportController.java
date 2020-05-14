@@ -24,11 +24,32 @@ public class TransportController {
       listaVozaca.setItems(dao.vratiSveDrivere());
 
       listaVozaca.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) ->{
-
+          Driver oldDriver=(Driver) oldItem;
+          Driver newDriver=(Driver) newItem;
+          if (oldItem!=null){
+              imeVozaca.textProperty().unbindBidirectional(oldDriver.imeProperty());
+          }
+          if (newItem!=null){
+              imeVozaca.textProperty().bindBidirectional(newDriver.imeProperty());
+          }
+          else{
+              imeBusa.setText("");
+          }
       });
 
 
       listaBuseva.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) ->{
+          Bus oldBus= (Bus) oldItem;
+          Bus newBus= (Bus) newItem;
+          if (oldItem!=null){
+              imeBusa.textProperty().unbindBidirectional(oldBus.proizvodjacProperty());
+          }
+          if (newItem!=null){
+              imeBusa.textProperty().bindBidirectional(newBus.proizvodjacProperty());
+          }
+          else{
+              imeBusa.setText("");
+          }
 
       });
     }

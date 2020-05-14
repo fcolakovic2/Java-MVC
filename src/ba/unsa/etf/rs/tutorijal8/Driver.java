@@ -15,6 +15,34 @@ public class Driver {
     private SimpleObjectProperty<LocalDate> dateOfBirth, dateOfEmployment;
 
 
+    public SimpleIntegerProperty idProperty() {
+        return id;
+    }
+
+    public String getIme() {
+        return Ime.get();
+    }
+
+    public SimpleStringProperty imeProperty() {
+        return Ime;
+    }
+
+    public SimpleStringProperty prezimeProperty() {
+        return Prezime;
+    }
+
+    public SimpleStringProperty JMBProperty() {
+        return JMB;
+    }
+
+    public SimpleObjectProperty<LocalDate> dateOfBirthProperty() {
+        return dateOfBirth;
+    }
+
+    public SimpleObjectProperty<LocalDate> dateOfEmploymentProperty() {
+        return dateOfEmployment;
+    }
+
     public Driver() {
         id=new SimpleIntegerProperty();
         Ime=new SimpleStringProperty();
@@ -91,7 +119,7 @@ public class Driver {
 
     @Override
     public String toString() {
-        return Ime+" " +Prezime;
+        return Ime.get()+" " +Prezime.get();
     }
     @Override
     public boolean equals(Object o) {
