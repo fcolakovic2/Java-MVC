@@ -1,5 +1,7 @@
 package ba.unsa.etf.rs.tutorijal8;
 
+import javafx.collections.ObservableList;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -81,7 +83,7 @@ public class Driver {
 
     @Override
     public String toString() {
-        return  " - (" + this.getName() + " " + this.getPrezime() + " ( " + this.getJMB() + " ))";
+        return Ime+" " +Prezime;
     }
     @Override
     public boolean equals(Object o) {
@@ -90,4 +92,5 @@ public class Driver {
         Driver driver = (Driver) o;
         return Objects.equals(getJMB(), driver.getJMB());
     }
+
 }

@@ -259,5 +259,22 @@ public class TransportDAO {
     }
 
 
+    public ObservableList<Driver> vratiSveDrivere(){
+        ObservableList<Driver> drivers = FXCollections.observableArrayList();
+        ResultSet sviVozaci = null;
+        try {
+            sviVozaci = vratiSveVozaceUpit.executeQuery();
+            Driver driver;
+            while ((driver = dajVozaceUpit(sviVozaci))!=null)   //samo vratit sve drivere iz querya
+            {
+                drivers.add(driver);
+            }
+            sviVozaci.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drivers;
+    }
+
 
 }

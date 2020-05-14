@@ -20,6 +20,7 @@ public class TransportController {
     public void initialize(){
       dao=TransportDAO.getInstance();
       listaBuseva.setItems(dao.vratiSveBuseve());
+      listaVozaca.setItems(dao.vratiSveDrivere());
     }
 
     public void napustiDugme(ActionEvent actionEvent) {
