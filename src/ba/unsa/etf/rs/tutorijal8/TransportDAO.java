@@ -10,7 +10,7 @@ public class TransportDAO {
     private Connection conn;  //def konekcije
 
     private static PreparedStatement obrisiTrenutnogVozacaUpit, vratiSveVozaceUpit, vratiSveBuseveUpit, obrisiDodjeluVozacaUpit, ubaciuDodjeluUpit, vratiNarBusUpit, vratiNarDriveraUpit, obrisiSveDodjeleUpit, ubaciUDriveraUpit, obrisiTrenutniBusUpit, obrisiSveBuseveUpit, obrisiDodjeluBusaUpit,
-            ubaciuBusUpit, obrisiSveVozaceUpit, vratiVozaceDodijeljeneUpit;   //def upita
+            ubaciuBusUpit, obrisiSveVozaceUpit, vratiVozaceDodijeljeneUpit,  sviBusevi, sviVozaci ;//def upita
 
     public static TransportDAO getInstance() {
         if(instance == null) instance = new TransportDAO();   //napravi instancu, vrati je
@@ -48,6 +48,7 @@ public class TransportDAO {
             vratiNarDriveraUpit = conn.prepareStatement("SELECT MAX(vozac_id)+1 FROM Vozac");
             vratiNarBusUpit = conn.prepareStatement("SELECT MAX(bus_id)+1 FROM Bus");
             obrisiDodjeluVozacaUpit = conn.prepareStatement("DELETE FROM dodjela WHERE driver_id = ?");
+            sviBusevi=conn.prepareStatement("SELECT * from  Bus ORDER BY proizvodjac" );
 
         } catch (SQLException e) {
             e.printStackTrace();
