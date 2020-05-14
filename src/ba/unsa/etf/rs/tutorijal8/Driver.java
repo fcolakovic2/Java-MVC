@@ -11,10 +11,19 @@ import java.util.Objects;
 public class Driver {
     private SimpleIntegerProperty id=new SimpleIntegerProperty();
     private SimpleStringProperty Ime=new SimpleStringProperty();
-    private SimpleStringProperty Prezime= new SimpleStringProperty();
-    private SimpleStringProperty JMB=new SimpleStringProperty();
+    private SimpleStringProperty Prezime=new SimpleStringProperty();
+    private SimpleStringProperty JMB = new SimpleStringProperty();
     private SimpleObjectProperty<LocalDate> dateOfBirth=new SimpleObjectProperty<>();
     private SimpleObjectProperty<LocalDate> dateOfEmployment=new SimpleObjectProperty<>();
+
+    public Driver() { }
+    public Driver(String ime, String prezime, String JMB, LocalDate dateOfBirth, LocalDate dateOfEmployment) {
+        this.Ime = new SimpleStringProperty(ime);
+        Prezime = new SimpleStringProperty(prezime);
+        this.JMB = new SimpleStringProperty(JMB);
+        this.dateOfBirth = new SimpleObjectProperty<LocalDate>(dateOfBirth);
+        this.dateOfEmployment = new SimpleObjectProperty<LocalDate>(dateOfEmployment);
+    }
 
     public Driver(SimpleStringProperty ime, SimpleStringProperty prezime, SimpleStringProperty JMB, SimpleObjectProperty<LocalDate> dateOfBirth, SimpleObjectProperty<LocalDate> dateOfEmployment) {
         Ime = ime;
@@ -24,7 +33,13 @@ public class Driver {
         this.dateOfEmployment = dateOfEmployment;
     }
 
-    public Driver() {
+    public Driver(SimpleIntegerProperty id, SimpleStringProperty ime, SimpleStringProperty prezime, SimpleStringProperty JMB, SimpleObjectProperty<LocalDate> dateOfBirth, SimpleObjectProperty<LocalDate> dateOfEmployment) {
+        this.id = id;
+        Ime = ime;
+        Prezime = prezime;
+        this.JMB = JMB;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfEmployment = dateOfEmployment;
     }
 
     public int getId() {
@@ -101,6 +116,6 @@ public class Driver {
 
     @Override
     public String toString() {
-        return Ime.get() + Prezime.get();
+        return Ime.get();
     }
 }
