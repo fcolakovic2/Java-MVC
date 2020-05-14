@@ -184,7 +184,7 @@
       <workItem from="1589394931698" duration="93000" />
       <workItem from="1589396056270" duration="567000" />
       <workItem from="1589463290859" duration="8429000" />
-      <workItem from="1589477104038" duration="2788000" />
+      <workItem from="1589477104038" duration="3175000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1557517574894</created>
@@ -270,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589478958516</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Implementirano exit dugme i 2 listview-a.">
+      <created>1589480262070</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1589480262070</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,7 +297,8 @@
     <MESSAGE value="Zavrsena Bus klasa" />
     <MESSAGE value="Napravljen main za ucitavanje fxml fajla." />
     <MESSAGE value="Nastiman JavaFX da radi u projektu ( resources fxml, controller..)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nastiman JavaFX da radi u projektu ( resources fxml, controller..)" />
+    <MESSAGE value="Implementirano exit dugme i 2 listview-a." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementirano exit dugme i 2 listview-a." />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="181" key="#Inspections" timestamp="1589107859828">
@@ -325,10 +333,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="522" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589468172066" />
-    <state x="596" y="118" key="CommitChangelistDialog2" timestamp="1589478957416">
+    <state x="596" y="118" key="CommitChangelistDialog2" timestamp="1589480261168">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="596" y="118" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1589478957416" />
+    <state x="596" y="118" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1589480261168" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1589480244685">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
