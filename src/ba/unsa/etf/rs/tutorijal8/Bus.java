@@ -1,10 +1,13 @@
 package ba.unsa.etf.rs.tutorijal8;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Bus {
-    private Integer id = null;
-    private String proizvodjac;
-    private String serija;
-    private int numberOfSeats;
+    private SimpleIntegerProperty id=new SimpleIntegerProperty();
+    private SimpleStringProperty proizvodjac=new SimpleStringProperty();
+    private SimpleStringProperty serija=new SimpleStringProperty();
+    private SimpleIntegerProperty numberOfSeats=new SimpleIntegerProperty();
     private Driver firstDriver = null;
     private Driver secondDriver = null;
 
