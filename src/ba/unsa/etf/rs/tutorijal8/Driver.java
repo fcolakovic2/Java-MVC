@@ -17,7 +17,18 @@ public class Driver {
     private SimpleObjectProperty<LocalDate> dateOfEmployment=new SimpleObjectProperty<>();
 
     public Driver() { }
+
     public Driver(String ime, String prezime, String JMB, LocalDate dateOfBirth, LocalDate dateOfEmployment) {
+        this.Ime = new SimpleStringProperty(ime);
+        Prezime = new SimpleStringProperty(prezime);
+        this.JMB = new SimpleStringProperty(JMB);
+        this.dateOfBirth = new SimpleObjectProperty<LocalDate>(dateOfBirth);
+        this.dateOfEmployment = new SimpleObjectProperty<LocalDate>(dateOfEmployment);
+    }
+
+
+    public Driver(int id, String ime, String prezime, String JMB, LocalDate dateOfBirth, LocalDate dateOfEmployment) {
+        this.id=new SimpleIntegerProperty(id);
         this.Ime = new SimpleStringProperty(ime);
         Prezime = new SimpleStringProperty(prezime);
         this.JMB = new SimpleStringProperty(JMB);
@@ -42,6 +53,8 @@ public class Driver {
         this.dateOfEmployment = dateOfEmployment;
     }
 
+
+
     public int getId() {
         return id.get();
     }
@@ -54,7 +67,7 @@ public class Driver {
         this.id.set(id);
     }
 
-    public String getIme() {
+    public String getName() {
         return Ime.get();
     }
 

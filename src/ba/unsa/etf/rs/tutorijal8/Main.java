@@ -15,7 +15,7 @@ public class Main extends Application {
         TransportController ctrl = new TransportController();
         loader.setController(ctrl);
         Parent root = loader.load();
-        primaryStage.setTitle("Vozaci i busevi");
+        primaryStage.setTitle("VozaciApp");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

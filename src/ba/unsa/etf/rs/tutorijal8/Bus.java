@@ -1,6 +1,7 @@
 package ba.unsa.etf.rs.tutorijal8;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Bus {
@@ -8,22 +9,40 @@ public class Bus {
     private SimpleStringProperty proizvodjac=new SimpleStringProperty();
     private SimpleStringProperty serija=new SimpleStringProperty();
     private SimpleIntegerProperty numberOfSeats=new SimpleIntegerProperty();
-    private SimpleIntegerProperty firstDriver =new SimpleIntegerProperty();
-    private SimpleIntegerProperty secondDriver=new SimpleIntegerProperty();
+    private SimpleObjectProperty<Driver> firstDriver=new SimpleObjectProperty<>();
+    private SimpleObjectProperty<Driver> secondDriver=new SimpleObjectProperty<>();
 
 
     public Bus(){ }
 
-    public Bus(String proizvodjac, String serija, int numberOfSeats, int firstDriver, int secondDriver) {
-        this.proizvodjac = new SimpleStringProperty(proizvodjac);
-        this.serija =new SimpleStringProperty(serija);
-        this.numberOfSeats = new SimpleIntegerProperty(numberOfSeats);
-        this.firstDriver =  new SimpleIntegerProperty(firstDriver);
-        this.secondDriver =  new SimpleIntegerProperty(secondDriver);
+    public Bus(String proizvodjac, String serija, int brojSjedista) {
+        this.proizvodjac.set(proizvodjac);
+        this.serija.set(serija);
+        this.numberOfSeats.set(brojSjedista);
     }
 
 
-    public Bus(SimpleStringProperty proizvodjac, SimpleStringProperty serija, SimpleIntegerProperty numberOfSeats, SimpleIntegerProperty firstDriver, SimpleIntegerProperty secondDriver) {
+
+    public Bus(int id, String proizvodjac, String serija, int numberOfSeats, Driver firstDriver, Driver secondDriver) {
+        this.id=new SimpleIntegerProperty(id);
+        this.proizvodjac = new SimpleStringProperty(proizvodjac);
+        this.serija =new SimpleStringProperty(serija);
+        this.numberOfSeats = new SimpleIntegerProperty(numberOfSeats);
+        this.firstDriver =  new SimpleObjectProperty<Driver>(firstDriver);
+        this.secondDriver = new SimpleObjectProperty<Driver>(secondDriver);
+    }
+
+
+    public Bus(String proizvodjac, String serija, int numberOfSeats, Driver firstDriver, Driver secondDriver) {
+        this.proizvodjac = new SimpleStringProperty(proizvodjac);
+        this.serija =new SimpleStringProperty(serija);
+        this.numberOfSeats = new SimpleIntegerProperty(numberOfSeats);
+        this.firstDriver =  new SimpleObjectProperty<Driver>(firstDriver);
+        this.secondDriver = new SimpleObjectProperty<Driver>(secondDriver);
+    }
+
+
+    public Bus(SimpleStringProperty proizvodjac, SimpleStringProperty serija, SimpleIntegerProperty numberOfSeats, SimpleObjectProperty<Driver> firstDriver, SimpleObjectProperty<Driver> secondDriver) {
         this.proizvodjac = proizvodjac;
         this.serija = serija;
         this.numberOfSeats = numberOfSeats;
@@ -31,7 +50,7 @@ public class Bus {
         this.secondDriver = secondDriver;
     }
 
-    public Bus(SimpleIntegerProperty id, SimpleStringProperty proizvodjac, SimpleStringProperty serija, SimpleIntegerProperty numberOfSeats, SimpleIntegerProperty firstDriver, SimpleIntegerProperty secondDriver) {
+    public Bus(SimpleIntegerProperty id, SimpleStringProperty proizvodjac, SimpleStringProperty serija, SimpleIntegerProperty numberOfSeats, SimpleObjectProperty<Driver> firstDriver, SimpleObjectProperty<Driver> secondDriver) {
         this.id = id;
         this.proizvodjac = proizvodjac;
         this.serija = serija;
@@ -76,7 +95,7 @@ public class Bus {
         this.serija.set(serija);
     }
 
-    public int getNumberOfSeats() {
+    public int getnumberOfSeats() {
         return numberOfSeats.get();
     }
 
@@ -88,27 +107,27 @@ public class Bus {
         this.numberOfSeats.set(numberOfSeats);
     }
 
-    public int getFirstDriver() {
+    public Driver getFirstDriver() {
         return firstDriver.get();
     }
 
-    public SimpleIntegerProperty firstDriverProperty() {
+    public SimpleObjectProperty<Driver> firstDriverProperty() {
         return firstDriver;
     }
 
-    public void setFirstDriver(int firstDriver) {
+    public void setFirstDriver(Driver firstDriver) {
         this.firstDriver.set(firstDriver);
     }
 
-    public int getSecondDriver() {
+    public Driver getSecondDriver() {
         return secondDriver.get();
     }
 
-    public SimpleIntegerProperty secondDriverProperty() {
+    public SimpleObjectProperty<Driver> secondDriverProperty() {
         return secondDriver;
     }
 
-    public void setSecondDriver(int secondDriver) {
+    public void setSecondDriver(Driver secondDriver) {
         this.secondDriver.set(secondDriver);
     }
 
