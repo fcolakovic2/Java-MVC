@@ -59,6 +59,10 @@ public class Bus {
         this.secondDriver = secondDriver;
     }
 
+    public Bus(String text) {
+        proizvodjac=new SimpleStringProperty(text);
+    }
+
     public int getId() {
         return id.get();
     }

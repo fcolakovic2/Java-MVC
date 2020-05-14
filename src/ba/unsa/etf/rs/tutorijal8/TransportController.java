@@ -40,11 +40,19 @@ public class TransportController {
 
 
     public void dodajVozaca(ActionEvent actionEvent){
-
+        boolean status = instance.addDriver(new Driver(textFieldVoz.getText()));
+        if (status) {
+            instance.getDrivers();
+            labelaValidacija.setText("Uspješno dodan vozač!");
+        } else labelaValidacija.setText("Došlo je do greške pri dodavanju vozača!");
     }
 
     public void dodajBus(ActionEvent actionEvent){
-
+        boolean status = instance.addBus(new Bus(textFieldBus.getText()));
+        if (status) {
+            instance.getBusses();
+            labelaValidacija.setText("Uspješno dodan autobus!");
+        } else labelaValidacija.setText("Došlo je do greške pri dodavanju autobusa!");
     }
 
 }

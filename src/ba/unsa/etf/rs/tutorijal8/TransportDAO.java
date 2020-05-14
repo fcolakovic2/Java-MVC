@@ -87,7 +87,7 @@ public class TransportDAO {
         return sviDriveri;
     }
 
-    public void addDriver(Driver driver){
+    public boolean addDriver(Driver driver){
         ObservableList<Driver> listDrivera = getDrivers();
         if(listDrivera.contains(driver)) {
             throw new IllegalArgumentException("Taj vozač već postoji!");
@@ -106,13 +106,15 @@ public class TransportDAO {
             ubaciUDriveraUpit.setDate(5 , Date.valueOf((driver.getDateOfBirth())));  //konverzija u obicni Date jer getDateOfBirth vraca LocalDate
             ubaciUDriveraUpit.setDate(6 , Date.valueOf((driver.getDateOfEmployment())));
             ubaciUDriveraUpit.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            throw new IllegalArgumentException("Taj vozač već postoji!");
+            e.printStackTrace();
+            return false;
         }
     }
 
 
-    public void addBus(Bus bus) {
+    public boolean addBus(Bus bus) {
         try {
             ResultSet busevi = vratiNarBusUpit.executeQuery();
             int id = 1;
@@ -122,8 +124,10 @@ public class TransportDAO {
             ubaciuBusUpit.setString(3, bus.getSerija());  //popunjavanje upita za bus
             ubaciuBusUpit.setInt(4, bus.getnumberOfSeats());
             ubaciuBusUpit.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

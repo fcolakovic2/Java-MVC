@@ -53,6 +53,9 @@ public class Driver {
         this.dateOfEmployment = dateOfEmployment;
     }
 
+    public Driver(String text) {
+        Ime=new SimpleStringProperty(text);
+    }
 
 
     public int getId() {
