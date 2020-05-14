@@ -38,6 +38,6 @@
          </GridPane.margin>
       </Button>
       <TextField fx:id="textFieldVoz" GridPane.columnIndex="1" />
-      <TextField fx:id="textFieldBus" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="textFieldVoz" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>

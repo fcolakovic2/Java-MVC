@@ -4,10 +4,7 @@
     <list default="true" id="421d7fb7-fab3-48c2-b140-ac993b300cb0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/fxml/baza.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/fxml/baza.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Bus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Bus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/TransportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/TransportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/TransportDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ba/unsa/etf/rs/tutorijal8/TransportDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +184,7 @@
       <workItem from="1589394931698" duration="93000" />
       <workItem from="1589396056270" duration="567000" />
       <workItem from="1589463290859" duration="8429000" />
-      <workItem from="1589477104038" duration="6542000" />
+      <workItem from="1589477104038" duration="7697000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1557517574894</created>
@@ -301,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589483181292</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Rad na metodi dodajVozaca i dodajBus, nullptr.">
+      <created>1589483852386</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1589483852386</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,7 +329,8 @@
     <MESSAGE value="Dodana labela za validaciju." />
     <MESSAGE value="Dodan listView, sve pretvoreno u Obs Liste." />
     <MESSAGE value="Uljepsan malo GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Uljepsan malo GUI" />
+    <MESSAGE value="Rad na metodi dodajVozaca i dodajBus, nullptr." />
+    <option name="LAST_COMMIT_MESSAGE" value="Rad na metodi dodajVozaca i dodajBus, nullptr." />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="181" key="#Inspections" timestamp="1589107859828">
@@ -360,26 +365,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="522" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589468172066" />
-    <state x="596" y="118" key="CommitChangelistDialog2" timestamp="1589483180444">
+    <state x="596" y="118" key="CommitChangelistDialog2" timestamp="1589483851360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="596" y="118" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1589483180444" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1589483780953">
+    <state x="596" y="118" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1589483851360" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1589485018320">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589483780953" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1589483780952">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589485018320" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1589485018320">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589483780952" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1589483780952">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589485018320" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1589485018319">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589483780952" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1589483780953">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589485018319" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1589485018320">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589483780953" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589485018320" />
     <state x="440" y="97" key="SettingsEditor" timestamp="1589396133057">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

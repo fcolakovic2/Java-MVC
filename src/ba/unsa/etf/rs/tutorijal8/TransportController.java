@@ -11,11 +11,12 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 
 public class TransportController {
+
     public Button btnExit;
     public ListView<Driver> listaVozaca;
     public ListView<Bus> listaBuseva;
     public Label labelaValidacija;
-    private TransportDAO instance;
+    private TransportDAO instance=TransportDAO.getInstance();
     private TextField textFieldVoz;
     private TextField textFieldBus;
 
@@ -23,6 +24,7 @@ public class TransportController {
     public TransportController(TransportDAO instance) {
         this.instance = instance;
     }
+
 
     @FXML
     public void initialize(){
@@ -48,7 +50,9 @@ public class TransportController {
     }
 
     public void dodajBus(ActionEvent actionEvent){
-        boolean status = instance.addBus(new Bus(textFieldBus.getText()));
+        String proizv=textFieldBus.getText();
+        Bus bus = new Bus(proizv,"serija",50);
+        boolean status = instance.addBus(bus);
         if (status) {
             instance.getBusses();
             labelaValidacija.setText("Uspješno dodan autobus!");
