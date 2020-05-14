@@ -19,6 +19,7 @@ public class TransportController {
     @FXML
     public void initialize(){
       dao=TransportDAO.getInstance();
+      listaBuseva.setItems(dao.vratiSveBuseve());
     }
 
     public void napustiDugme(ActionEvent actionEvent) {

@@ -1,5 +1,8 @@
 package ba.unsa.etf.rs.tutorijal8;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.sqlite.JDBC;
 import java.sql.*;
 import java.time.LocalDate;
@@ -218,6 +221,41 @@ public class TransportDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ObservableList<Bus> vratiSveBuseve(){
+        ObservableList<Bus> buses = FXCollections.observableArrayList();
+        try {
+            ResultSet busevi = vratiSveBuseveUpit.executeQuery();
+            while(busevi.next()) {
+                Integer id = busevi.getInt(1);
+                String proizvodjac = busevi.getString(2);
+                String serija = busevi.getString(3);
+                int brojSjedista = busevi.getInt(4);
+                vratiVozaceDodijeljeneUpit.setInt(1, id);
+
+                ResultSet vozaci = vratiVozaceDodijeljeneUpit.executeQuery();
+                Driver driver;
+                ArrayList<Driver> drivers = new ArrayList<Driver>();
+                while (vozaci.next()) {
+                    Integer id_drivera = vozaci.getInt(1);
+                    String name = vozaci.getString(2);
+                    String surname = vozaci.getString(3);
+                    String jmb = vozaci.getString(4);
+                    Date dateOfBirth = vozaci.getDate(5);
+                    Date dateOfEmployment = vozaci.getDate(6);
+                    drivers.add(new Driver(id_drivera, name, surname, jmb, dateOfBirth.toLocalDate(), dateOfEmployment.toLocalDate()));
+                }
+                if (drivers.size() == 1) buses.add(new Bus(id, proizvodjac, serija, brojSjedista, drivers.get(0), null));
+
+                else if (drivers.size() == 2) buses.add(new Bus(id, proizvodjac, serija, brojSjedista, drivers.get(0), drivers.get(1)));
+
+                else buses.add(new Bus(id, proizvodjac, serija, brojSjedista, null, null));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return buses;
     }
 
 

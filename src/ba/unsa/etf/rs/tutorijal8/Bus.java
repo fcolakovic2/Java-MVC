@@ -84,15 +84,7 @@ public class Bus {
 
     @Override
     public String toString () {
-        String s = "";
-        s += this.proizvodjac + " " + this.serija + " ( seats: " + this.getnumberOfSeats() + " )";
-        if (firstDriver != null) {
-            s += firstDriver.toString();
-        }
-        if (secondDriver != null) {
-            s += secondDriver.toString();
-        }
-        return s;
+        return proizvodjac;
     }
 
 }
