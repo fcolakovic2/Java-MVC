@@ -22,7 +22,7 @@
             <Insets left="100.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="imeBusa" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField promptText="imeBusa" fx:id="imeBusa" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="100.0" />
          </GridPane.margin>
