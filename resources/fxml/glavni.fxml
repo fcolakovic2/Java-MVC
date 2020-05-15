@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <TableView fx:id="tabelaBus" prefHeight="400.0" prefWidth="208.0" BorderPane.alignment="CENTER_RIGHT">
+            <columns>
+                <TableColumn fx:id="makerBus" prefWidth="105.60002440214157" text="Proizvođač busa" />
+                <TableColumn fx:id="serijaBus" prefWidth="112.7999267578125" text="Serija busa" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+    <right>
+        <VBox prefHeight="422.0" prefWidth="108.0" BorderPane.alignment="CENTER">
+            <children>
+                <GridPane prefHeight="220.0" prefWidth="108.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.20000457763672" minWidth="10.0" prefWidth="131.99999237060547" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="303.99998779296874" minHeight="0.0" prefHeight="108.4" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="296.00001831054686" minHeight="10.0" prefHeight="112.4" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#dodajVozaca" text="Dodaj vozača" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#dodajBus" text="Dodaj bus" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#obrisiVozaca" text="Izbriši vozača" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#izbrisiBus" text="Izbriši bus" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#akcijaEditDrivera" text="Izmijeni vozača" GridPane.halignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#akcijaEditBus" text="Izmijeni bus" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#exitBtn" text="Exit" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="35.0" top="150.0" />
+                     </GridPane.margin>
+                  </Button>
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+    </right>
+   <top>
+        <TableView fx:id="tabelaDriver" prefHeight="400.0" prefWidth="176.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="imeDrivera" prefWidth="87.19998300075531" text="Ime vozača" />
+                <TableColumn fx:id="prezimeDrivera" prefWidth="85.60004425048828" text="Prezime vozača" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </BorderPane.margin>
+        </TableView>
+   </top>
+   <bottom>
+      <Label fx:id="labelaVal" text="Validacija ispravnosti unosa autobusa ili vozača" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

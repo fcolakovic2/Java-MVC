@@ -1,24 +1,27 @@
 package ba.unsa.etf.rs.tutorijal8;
 
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.SimpleStringProperty;
 import org.sqlite.JDBC;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TransportDAO {
+    //konekcija na bazu!!
+
+    private Connection conn;
+    private static PreparedStatement dajVozaceUpit,dajBusUpit,
+            odrediIdDriveraUpit,truncVozaciBuseva, dodajVouzacaBusa , addDriver , obrisiBusUpit ,
+            dodajBusUpit ,obrisiDriverUpit ,odrediIdBusaUpit, truncBus , truncDriver ,
+            updateBus ,updateDriver,dajJMB , getDodjelaVozaci , busById , driverById;
+
+
     private static TransportDAO instance;
-    private Connection conn;  //def konekcije
-
-    private static PreparedStatement obrisiTrenutnogVozacaUpit, vratiSveVozaceUpit, vratiSveBuseveUpit, obrisiDodjeluVozacaUpit, ubaciuDodjeluUpit, vratiNarBusUpit, vratiNarDriveraUpit, obrisiSveDodjeleUpit, ubaciUDriveraUpit, obrisiTrenutniBusUpit, obrisiSveBuseveUpit, obrisiDodjeluBusaUpit,
-            ubaciuBusUpit, obrisiSveVozaceUpit, vratiVozaceDodijeljeneUpit,  sviBusevi, sviVozaci ;//def upita
-
-    public static TransportDAO getInstance() {
-        if(instance == null) instance = new TransportDAO();   //napravi instancu, vrati je
-        return instance;
-    }
+    private Driver driver;
     static {
         try {
             DriverManager.registerDriver(new JDBC());
@@ -28,153 +31,164 @@ public class TransportDAO {
         }
     }
 
-    private TransportDAO(){     //zabranjen konstruktor, ne moze se transport instancirat
+    public static TransportDAO getInstance() {
+        if(instance == null) instance = new TransportDAO();
+        return instance;
+    }
+
+    private TransportDAO(){
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:Baza.db");   //conn na bazu
+            conn = DriverManager.getConnection("jdbc:sqlite:Baza.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         try {
-            ubaciuBusUpit = conn.prepareStatement("INSERT INTO Bus VALUES(?,?,?,?)");
-            ubaciUDriveraUpit = conn.prepareStatement("INSERT INTO Vozac VALUES (?,?,?,?,?,?)");
-            ubaciuDodjeluUpit = conn.prepareStatement("INSERT OR REPLACE INTO dodjela(bus_id, driver_id) VALUES (?,?)");
-            obrisiSveDodjeleUpit = conn.prepareStatement("DELETE FROM dodjela WHERE 1=1;");
-            obrisiTrenutnogVozacaUpit = conn.prepareStatement("DELETE FROM Vozac WHERE  vozac_id=?");         //svi upiti
-            obrisiDodjeluBusaUpit = conn.prepareStatement("DELETE FROM dodjela WHERE bus_id = ?");
-            obrisiSveBuseveUpit = conn.prepareStatement("DELETE FROM Bus");
-            obrisiTrenutniBusUpit = conn.prepareStatement("DELETE FROM Bus WHERE bus_id=?");
-            obrisiSveVozaceUpit = conn.prepareStatement("DELETE FROM Vozac");
-            vratiVozaceDodijeljeneUpit = conn.prepareStatement("SELECT DISTINCT dr.vozac_id, dr.ime, dr.prezime, dr.JMB, dr.datum_rodjenja, dr.datum_zaposlenja" +
-                    " FROM dodjela d INNER JOIN Vozac dr ON (d.driver_id = dr.vozac_id) WHERE d.bus_id=?");
-            vratiSveVozaceUpit = conn.prepareStatement("SELECT * FROM Vozac;");
-            vratiSveBuseveUpit = conn.prepareStatement("SELECT * FROM Bus");
-            vratiNarDriveraUpit = conn.prepareStatement("SELECT MAX(vozac_id)+1 FROM Vozac");
-            vratiNarBusUpit = conn.prepareStatement("SELECT MAX(bus_id)+1 FROM Bus");
-            obrisiDodjeluVozacaUpit = conn.prepareStatement("DELETE FROM dodjela WHERE driver_id = ?");
-            sviBusevi=conn.prepareStatement("SELECT * from  Bus ORDER BY proizvodjac" );
+            obrisiBusUpit = conn.prepareStatement("DELETE FROM Bus WHERE bus_id=?");
+            obrisiDriverUpit = conn.prepareStatement("DELETE FROM Vozac WHERE  vozac_id=?");
+            addDriver = conn.prepareStatement("INSERT INTO Vozac VALUES (?,?,?,?,?,?)");
+            dajVozaceUpit = conn.prepareStatement("SELECT * FROM Vozac;");
+            dajBusUpit = conn.prepareStatement("SELECT * FROM Bus");
+            dodajBusUpit = conn.prepareStatement("INSERT INTO Bus VALUES(?,?,?,?,?)");
+            // daj id
+            odrediIdBusaUpit = conn.prepareStatement("SELECT MAX(bus_id)+1 FROM Bus");
+            odrediIdDriveraUpit = conn.prepareStatement("SELECT MAX(vozac_id)+1 FROM Vozac");
+            // Delete
+            truncBus = conn.prepareStatement("DELETE FROM Bus");
+            truncDriver = conn.prepareStatement("DELETE FROM Vozac");
+            truncVozaciBuseva = conn.prepareStatement("DELETE FROM VozaciBuseva");
+            // update
+            updateDriver = conn.prepareStatement("UPDATE Vozac SET ime=?, prezime=?, JMB=?, datum_rodjenja=?, datum_zaposljenja=? WHERE vozac_id=?; commit;");
+            updateBus = conn.prepareStatement("UPDATE Bus SET proizvodjac=?, serija=?, broj_sjedista=?, broj_vozaca=? WHERE bus_id=?; commit; ");
+            // by Id
+            busById = conn.prepareStatement("SELECT bus_id, proizvodjac, serija, broj_sjedista, broj_vozaca from Bus where bus_id =?");
+            driverById = conn.prepareStatement("SELECT vozac_id, ime, prezime, JMB, datum_rodjenja, datum_zaposljenja  from Vozac where vozac_id =?");
 
+        } catch (SQLException e) {
+            regenerisiBazu();
+            e.printStackTrace();
+        }
+    }
+    //Rjesavamo slucaj ukoliko baza nije kreirana!
+    public void regenerisiBazu() {
+        Scanner ulaz = null;
+        try {
+            ulaz = new Scanner(new FileInputStream("Baza.db.sql"));
+            String sqlUpit = "";
+            while (ulaz.hasNext()){
+                sqlUpit += ulaz.nextLine();
+                if (sqlUpit.charAt(sqlUpit.length() - 1 ) == ';'){
+                    try {
+                        Statement stmt = conn.createStatement();
+                        stmt.execute(sqlUpit);
+                        sqlUpit = "";
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ulaz.close();
+    }
+    public static void removeInstance() {
+        if (instance == null) return;
+        instance.close();
+        instance = null;
+    }
+    public void close() {
+        try {
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
 
-    public void resetDatabase() {
+    public void addDriver(Driver driver){
         try {
-            obrisiSveVozaceUpit.executeUpdate();
-            obrisiSveBuseveUpit.executeUpdate();
-            obrisiSveDodjeleUpit.executeUpdate();             //resetuje se tako sto pobrisemo sve iz nje
+            ResultSet rs = odrediIdDriveraUpit.executeQuery();
+            int id = 1;
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            addDriver.setInt(1, id);
+            addDriver.setString(2, driver.getIme());
+            addDriver.setString(3, driver.getPrezime());
+            addDriver.setString(4 , driver.getJMB());
+            addDriver.setDate(5 , convertToDateViaSqlDate(driver.getBirthDate()));
+            addDriver.setDate(6 , convertToDateViaSqlDate(driver.getWorkDate()));
+            addDriver.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("Taj vozač već postoji!");
+        }
+    }
+    public void addBus(Bus bus) {
+        try {
+            ResultSet rs = odrediIdBusaUpit.executeQuery();
+            int id = 1;
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            dodajBusUpit.setInt(1, id);
+            dodajBusUpit.setString(2, bus.getProizvodjac());
+            dodajBusUpit.setString(3, bus.getSerija());
+            dodajBusUpit.setInt(4, bus.getNumberOfSeats());
+            dodajBusUpit.setInt(5,bus.getNumberOfDrivers());
+            dodajBusUpit.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 
     public ArrayList<Driver> getDrivers() {
         ArrayList<Driver> drivers = new ArrayList<Driver>();
-        ResultSet sviVozaci = null;
+        ResultSet result = null;
         try {
-            sviVozaci = vratiSveVozaceUpit.executeQuery();
+            result = dajVozaceUpit.executeQuery();
             Driver driver;
-            while ((driver = dajVozaceUpit(sviVozaci))!=null)   //samo vratit sve drivere iz querya
-            {
+            while (  ( driver = dajVozaceUpit(result) ) != null )
                 drivers.add(driver);
-            }
-            sviVozaci.close();
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return drivers;
     }
 
-    public void addDriver(Driver driver){
-        ArrayList<Driver> listDrivera = getDrivers();
-        if(listDrivera.contains(driver)) {
-            throw new IllegalArgumentException("Taj vozač već postoji!");
-        }                 //vraceni svi dosadasnji driveri, provjera da li postoji vozac koji se unosi
-
-        try {
-            ResultSet driveri = vratiNarDriveraUpit.executeQuery();
-            int id = 1;
-            if (driveri.next()) {
-                id = driveri.getInt(1);
-            }
-            ubaciUDriveraUpit.setInt(1, id);
-            ubaciUDriveraUpit.setString(2, driver.getName());    //popunjavanje upita
-            ubaciUDriveraUpit.setString(3, driver.getPrezime());
-            ubaciUDriveraUpit.setString(4 , driver.getJMB());
-            ubaciUDriveraUpit.setDate(5 , Date.valueOf((driver.getDateOfBirth())));  //konverzija u obicni Date jer getDateOfBirth vraca LocalDate
-            ubaciUDriveraUpit.setDate(6 , Date.valueOf((driver.getDateOfEmployment())));
-            ubaciUDriveraUpit.executeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("Taj vozač već postoji!");
-        }
-    }
-
-
-    public void addBus(Bus bus) {
-        try {
-            ResultSet busevi = vratiNarBusUpit.executeQuery();
-            int id = 1;
-            if (busevi.next()) id = busevi.getInt(1);
-            ubaciuBusUpit.setInt(1, id);
-            ubaciuBusUpit.setString(2, bus.getProizvodjac());
-            ubaciuBusUpit.setString(3, bus.getSerija());  //popunjavanje upita za bus
-            ubaciuBusUpit.setInt(4, bus.getnumberOfSeats());
-            ubaciuBusUpit.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public ArrayList<Bus> getBusses() {
-        ArrayList<Bus> buses = new ArrayList<>();
+        ArrayList<Bus> busevi = new ArrayList<Bus>();
+        ResultSet result = null;
         try {
-            ResultSet busevi = vratiSveBuseveUpit.executeQuery();
-            while(busevi.next()) {
-                Integer id = busevi.getInt(1);
-                String proizvodjac = busevi.getString(2);
-                String serija = busevi.getString(3);
-                int brojSjedista = busevi.getInt(4);
-                vratiVozaceDodijeljeneUpit.setInt(1, id);
-
-                ResultSet vozaci = vratiVozaceDodijeljeneUpit.executeQuery();
-                Driver driver;
-                ArrayList<Driver> drivers = new ArrayList<Driver>();
-                while (vozaci.next()) {
-                    Integer id_drivera = vozaci.getInt(1);
-                    String name = vozaci.getString(2);
-                    String surname = vozaci.getString(3);
-                    String jmb = vozaci.getString(4);
-                    Date dateOfBirth = vozaci.getDate(5);
-                    Date dateOfEmployment = vozaci.getDate(6);
-                    drivers.add(new Driver(id_drivera, name, surname, jmb, dateOfBirth.toLocalDate(), dateOfEmployment.toLocalDate()));
-                }
-                if (drivers.size() == 1) buses.add(new Bus(id, proizvodjac, serija, brojSjedista, drivers.get(0), null));
-
-                else if (drivers.size() == 2) buses.add(new Bus(id, proizvodjac, serija, brojSjedista, drivers.get(0), drivers.get(1)));
-
-                else buses.add(new Bus(id, proizvodjac, serija, brojSjedista, null, null));
-            }
+            result = dajBusUpit.executeQuery();
+            Bus bus;
+            while ( ( bus = dajBusUpit(result) ) != null )
+                busevi.add(bus);
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return buses;
+        return busevi;
     }
 
-    private Driver dajVozaceUpit(ResultSet resultset) {
+    public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+    private Driver dajVozaceUpit(ResultSet result) {
         Driver driver = null;
         try {
-            if (resultset.next() ){
-                int id = resultset.getInt("vozac_id");
-                String name = resultset.getString("ime");
-                String surname = resultset.getString("prezime");
-                String jmb = resultset.getString("JMB");
-                LocalDate dateOfBirth = (resultset.getDate("datum_rodjenja")).toLocalDate();
-                LocalDate dateOfEmployment = (resultset.getDate("datum_zaposlenja")).toLocalDate();
+            if (result.next() ){
+                int id = result.getInt("vozac_id");
+                String name = result.getString("ime");
+                String surname = result.getString("prezime");
+                String jmb = result.getString("JMB");
+                LocalDate rodjendan = result.getDate("datum_rodjenja").toLocalDate();
+                LocalDate datum_zap = result.getDate("datum_zaposljenja").toLocalDate();
 
-                driver = new Driver( name , surname , jmb , dateOfBirth , dateOfEmployment);
+                driver = new Driver( name , surname , jmb , rodjendan , datum_zap);
                 driver.setId(id);
             }
         } catch (SQLException e) {
@@ -183,23 +197,101 @@ public class TransportDAO {
         return driver;
     }
 
+
+    private Bus dajBusUpit(ResultSet result) {
+        Bus bus = null;
+        try {
+            if (result.next() ){
+                int id = result.getInt("bus_id");
+                String proizvodjac = result.getString("proizvodjac");
+                String serija = result.getString("serija");
+                int brojSjedista = result.getInt("broj_sjedista");
+                // getDodjelaVozaci.setInt(1,id);
+
+                bus = new Bus( proizvodjac , serija , brojSjedista);
+                bus.setId(id);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bus;
+    }
+
+    public void izmijeniDrivera (Driver driver) {
+        try {
+            driverById.clearParameters();
+            driverById.setInt(1,driver.getId());
+            ResultSet res = driverById.executeQuery();
+            while(res.next()) {
+                updateDriver.setString(1, driver.getIme());
+                updateDriver.setString(2, driver.getPrezime());
+                updateDriver.setString(3, driver.getJMB());
+                updateDriver.setDate(4, Date.valueOf(driver.getBirthDate()));
+                updateDriver.setDate(5, Date.valueOf(driver.getWorkDate()));
+                updateDriver.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void izmijeniBus(Bus bus) {
+        try {
+            /*busById.clearParameters();
+            busById.setInt(1,bus.getId());
+            ResultSet res = busById.executeQuery();
+            while(res.next()) {
+                updateBus.clearParameters();*/
+            updateBus.setString(1, bus.getProizvodjac());
+            updateBus.setString(2, bus.getSerija());
+            updateBus.setInt(3, bus.getNumberOfSeats());
+            updateBus.setInt(4, bus.getNumberOfDrivers());
+            updateBus.executeUpdate();
+            //}
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void deleteBus(Bus bus) {
+        try {
+            obrisiBusUpit.setInt(1, bus.getId());
+            obrisiBusUpit.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteDriver(Driver driver) {
         try {
-            obrisiTrenutnogVozacaUpit.setInt(1, driver.getId());
-            obrisiTrenutnogVozacaUpit.executeUpdate();
-            obrisiDodjeluVozacaUpit.setInt(1, driver.getId());
-            obrisiDodjeluVozacaUpit.executeUpdate();
+            obrisiDriverUpit.setInt(1, driver.getId());
+            obrisiDriverUpit.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resetDatabase() {
+        try {
+            truncVozaciBuseva.executeUpdate();
+            truncBus.executeUpdate();
+            truncDriver.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
+/*
     public void dodijeliVozacuAutobus(Driver driver, Bus bus, int which) {
         try {
-            ubaciuDodjeluUpit.setInt(1 , bus.getId());
-            ubaciuDodjeluUpit.setInt(2,driver.getId());
-            ubaciuDodjeluUpit.executeUpdate();
+            dodajVouzacaBusa.setInt(1 , bus.getId());
+            dodajVouzacaBusa.setInt(2,driver.getId());
+            dodajVouzacaBusa.executeUpdate();
             if(which == 1){
                 bus.setFirstDriver(driver);
             }
@@ -210,71 +302,5 @@ public class TransportDAO {
             e.printStackTrace();
         }
     }
-
-
-    public void deleteBus(Bus bus) {
-        try {
-            obrisiDodjeluBusaUpit.setInt(1, bus.getId());
-            obrisiDodjeluBusaUpit.executeUpdate();
-            obrisiTrenutniBusUpit.setInt(1, bus.getId());
-            obrisiTrenutniBusUpit.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ObservableList<Bus> vratiSveBuseve(){
-        ObservableList<Bus> buses = FXCollections.observableArrayList();
-        try {
-            ResultSet busevi = vratiSveBuseveUpit.executeQuery();
-            while(busevi.next()) {
-                Integer id = busevi.getInt(1);
-                String proizvodjac = busevi.getString(2);
-                String serija = busevi.getString(3);
-                int brojSjedista = busevi.getInt(4);
-                vratiVozaceDodijeljeneUpit.setInt(1, id);
-
-                ResultSet vozaci = vratiVozaceDodijeljeneUpit.executeQuery();
-                Driver driver;
-                ArrayList<Driver> drivers = new ArrayList<Driver>();
-                while (vozaci.next()) {
-                    Integer id_drivera = vozaci.getInt(1);
-                    String name = vozaci.getString(2);
-                    String surname = vozaci.getString(3);
-                    String jmb = vozaci.getString(4);
-                    Date dateOfBirth = vozaci.getDate(5);
-                    Date dateOfEmployment = vozaci.getDate(6);
-                    drivers.add(new Driver(id_drivera, name, surname, jmb, dateOfBirth.toLocalDate(), dateOfEmployment.toLocalDate()));
-                }
-                if (drivers.size() == 1) buses.add(new Bus(id, proizvodjac, serija, brojSjedista, drivers.get(0), null));
-
-                else if (drivers.size() == 2) buses.add(new Bus(id, proizvodjac, serija, brojSjedista, drivers.get(0), drivers.get(1)));
-
-                else buses.add(new Bus(id, proizvodjac, serija, brojSjedista, null, null));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return buses;
-    }
-
-
-    public ObservableList<Driver> vratiSveDrivere(){
-        ObservableList<Driver> drivers = FXCollections.observableArrayList();
-        ResultSet sviVozaci = null;
-        try {
-            sviVozaci = vratiSveVozaceUpit.executeQuery();
-            Driver driver;
-            while ((driver = dajVozaceUpit(sviVozaci))!=null)   //samo vratit sve drivere iz querya
-            {
-                drivers.add(driver);
-            }
-            sviVozaci.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return drivers;
-    }
-
-
+    */
 }

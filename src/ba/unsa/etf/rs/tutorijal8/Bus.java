@@ -1,92 +1,43 @@
 package ba.unsa.etf.rs.tutorijal8;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Bus {
-    private SimpleIntegerProperty id, numberOfSeats;
-    private SimpleStringProperty proizvodjac,serija;
-    private SimpleObjectProperty<Driver> firstDriver, secondDriver;
+    private SimpleIntegerProperty id = new SimpleIntegerProperty();
+    private SimpleStringProperty proizvodjac = new SimpleStringProperty();
+    private SimpleStringProperty serija = new SimpleStringProperty();
+    private SimpleIntegerProperty numberOfSeats = new SimpleIntegerProperty();
+    private SimpleIntegerProperty numberOfDrivers = new SimpleIntegerProperty();
+    private SimpleIntegerProperty FirstDriver = new SimpleIntegerProperty();
+    private SimpleIntegerProperty SecondDriver = new SimpleIntegerProperty();
 
-
-    public SimpleIntegerProperty idProperty() {
-        return id;
+    public Bus(Integer id, String proizvodjac, String serija, Integer numberOfSeats, Integer numberOfDrivers, Integer firstDriver, Integer secondDriver) {
+        this.id.set(id);
+        this.proizvodjac.set(proizvodjac);
+        this.serija.set(serija);
+        this.numberOfSeats.set(numberOfSeats);
+        this.numberOfDrivers.set(numberOfDrivers);
+        FirstDriver.set(firstDriver);
+        SecondDriver.set(secondDriver);
     }
 
-    public int getNumberOfSeats() {
-        return numberOfSeats.get();
+    public Bus(String proizvodjac, String serija, int brojSjedista) {
+        this.proizvodjac.set(proizvodjac);
+        this.serija.set(serija);
+        this.numberOfSeats.set(brojSjedista);
     }
 
-    public SimpleIntegerProperty numberOfSeatsProperty() {
-        return numberOfSeats;
-    }
+    public Bus() {
 
-    public SimpleStringProperty proizvodjacProperty() {
-        return proizvodjac;
-    }
-
-    public SimpleStringProperty serijaProperty() {
-        return serija;
-    }
-
-    public SimpleObjectProperty<Driver> firstDriverProperty() {
-        return firstDriver;
-    }
-
-    public SimpleObjectProperty<Driver> secondDriverProperty() {
-        return secondDriver;
-    }
-
-    public Driver getFirstDriver() {
-        return firstDriver.get();
-    }
-
-    public void setFirstDriver(Driver firstDriver) {
-        this.firstDriver.set(firstDriver);
-    }
-
-    public Driver getSecondDriver() {
-        return secondDriver.get();
-    }
-
-    public void setSecondDriver(Driver secondDriver) {
-        this.secondDriver.set(secondDriver);
-    }
-
-    public Bus(){
-        id=new SimpleIntegerProperty();
-        numberOfSeats=new SimpleIntegerProperty();
-        proizvodjac=new SimpleStringProperty();
-        serija=new SimpleStringProperty();
-        firstDriver=new SimpleObjectProperty<Driver>();
-        secondDriver=new SimpleObjectProperty<Driver>();
-    }
-
-    public Bus(String proizvodjac, String serija, int numberOfSeats) {
-        this.proizvodjac = new SimpleStringProperty(proizvodjac);
-        this.serija = new SimpleStringProperty(serija);
-        this.numberOfSeats = new SimpleIntegerProperty(numberOfSeats);
-    }
-
-    public Bus( int Id, String proizvodjac, String serija, int numberOfSeats) {
-        id = new SimpleIntegerProperty(Id);
-        this.proizvodjac = new SimpleStringProperty(proizvodjac);
-        this.serija = new SimpleStringProperty(serija);
-        this.numberOfSeats = new SimpleIntegerProperty(numberOfSeats);
-
-    }
-    public Bus(int Id, String proizvodjac, String serija, int numberOfSeats, Driver driverPrvi, Driver driverDrugi) {
-        id = new SimpleIntegerProperty(Id);
-        this.proizvodjac = new SimpleStringProperty(proizvodjac);
-        this.serija = new SimpleStringProperty(serija);
-        this.numberOfSeats = new SimpleIntegerProperty(numberOfSeats);
-        this.firstDriver = new SimpleObjectProperty<Driver>(driverPrvi);
-        this.secondDriver = new SimpleObjectProperty<Driver>(driverDrugi);
     }
 
     public int getId() {
         return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
+        return id;
     }
 
     public void setId(int id) {
@@ -97,6 +48,10 @@ public class Bus {
         return proizvodjac.get();
     }
 
+    public SimpleStringProperty proizvodjacProperty() {
+        return proizvodjac;
+    }
+
     public void setProizvodjac(String proizvodjac) {
         this.proizvodjac.set(proizvodjac);
     }
@@ -105,23 +60,65 @@ public class Bus {
         return serija.get();
     }
 
+    public SimpleStringProperty serijaProperty() {
+        return serija;
+    }
+
     public void setSerija(String serija) {
         this.serija.set(serija);
     }
 
-    public int getnumberOfSeats() {
+    public int getNumberOfSeats() {
         return numberOfSeats.get();
+    }
+
+    public SimpleIntegerProperty numberOfSeatsProperty() {
+        return numberOfSeats;
     }
 
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats.set(numberOfSeats);
     }
 
+    public int getNumberOfDrivers() {
+        return numberOfDrivers.get();
+    }
+
+    public SimpleIntegerProperty numberOfDriversProperty() {
+        return numberOfDrivers;
+    }
+
+    public void setNumberOfDrivers(int numberOfDrivers) {
+        this.numberOfDrivers.set(numberOfDrivers);
+    }
+
+    public int getFirstDriver() {
+        return FirstDriver.get();
+    }
+
+    public SimpleIntegerProperty firstDriverProperty() {
+        return FirstDriver;
+    }
+
+    public void setFirstDriver(int firstDriver) {
+        this.FirstDriver.set(firstDriver);
+    }
+
+    public int getSecondDriver() {
+        return SecondDriver.get();
+    }
+
+    public SimpleIntegerProperty secondDriverProperty() {
+        return SecondDriver;
+    }
+
+    public void setSecondDriver(int secondDriver) {
+        this.SecondDriver.set(secondDriver);
+    }
 
 
     @Override
-    public String toString () {
-        return proizvodjac.get();
+    public String toString() {
+        return proizvodjac+" "+serija ;
     }
-
 }
