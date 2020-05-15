@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TransportDAO {
-    //konekcija na bazu!!
+
 
     private Connection conn;
     private static PreparedStatement dajVozaceUpit,dajBusUpit,
-            odrediIdDriveraUpit,truncVozaciBuseva, dodajVouzacaBusa , addDriver , obrisiBusUpit ,
+            odrediIdDriveraUpit,truncVozaciBuseva,  addDriver , obrisiBusUpit ,
             dodajBusUpit ,obrisiDriverUpit ,odrediIdBusaUpit, truncBus , truncDriver ,
-            updateBus ,updateDriver,dajJMB , getDodjelaVozaci , busById , driverById;
+            updateBus ,updateDriver, busById , driverById;
 
 
     private static TransportDAO instance;
@@ -49,17 +49,13 @@ public class TransportDAO {
             dajVozaceUpit = conn.prepareStatement("SELECT * FROM Vozac;");
             dajBusUpit = conn.prepareStatement("SELECT * FROM Bus");
             dodajBusUpit = conn.prepareStatement("INSERT INTO Bus VALUES(?,?,?,?,?)");
-            // daj id
             odrediIdBusaUpit = conn.prepareStatement("SELECT MAX(bus_id)+1 FROM Bus");
             odrediIdDriveraUpit = conn.prepareStatement("SELECT MAX(vozac_id)+1 FROM Vozac");
-            // Delete
             truncBus = conn.prepareStatement("DELETE FROM Bus");
             truncDriver = conn.prepareStatement("DELETE FROM Vozac");
             truncVozaciBuseva = conn.prepareStatement("DELETE FROM VozaciBuseva");
-            // update
             updateDriver = conn.prepareStatement("UPDATE Vozac SET ime=?, prezime=?, JMB=?, datum_rodjenja=?, datum_zaposljenja=? WHERE vozac_id=?; commit;");
             updateBus = conn.prepareStatement("UPDATE Bus SET proizvodjac=?, serija=?, broj_sjedista=?, broj_vozaca=? WHERE bus_id=?; commit; ");
-            // by Id
             busById = conn.prepareStatement("SELECT bus_id, proizvodjac, serija, broj_sjedista, broj_vozaca from Bus where bus_id =?");
             driverById = conn.prepareStatement("SELECT vozac_id, ime, prezime, JMB, datum_rodjenja, datum_zaposljenja  from Vozac where vozac_id =?");
 
@@ -68,7 +64,7 @@ public class TransportDAO {
             e.printStackTrace();
         }
     }
-    //Rjesavamo slucaj ukoliko baza nije kreirana!
+
     public void regenerisiBazu() {
         Scanner ulaz = null;
         try {
@@ -239,11 +235,6 @@ public class TransportDAO {
 
     public void izmijeniBus(Bus bus) {
         try {
-            /*busById.clearParameters();
-            busById.setInt(1,bus.getId());
-            ResultSet res = busById.executeQuery();
-            while(res.next()) {
-                updateBus.clearParameters();*/
             updateBus.setString(1, bus.getProizvodjac());
             updateBus.setString(2, bus.getSerija());
             updateBus.setInt(3, bus.getNumberOfSeats());
@@ -285,22 +276,4 @@ public class TransportDAO {
         }
     }
 
-
-/*
-    public void dodijeliVozacuAutobus(Driver driver, Bus bus, int which) {
-        try {
-            dodajVouzacaBusa.setInt(1 , bus.getId());
-            dodajVouzacaBusa.setInt(2,driver.getId());
-            dodajVouzacaBusa.executeUpdate();
-            if(which == 1){
-                bus.setFirstDriver(driver);
-            }
-            if (which == 2){
-                bus.setSecondDriver(driver);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }
