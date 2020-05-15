@@ -32,8 +32,8 @@ public class DriverController {
     }
 
     public void akcijaCancel(ActionEvent actionEvent) {
-        Stage stage = (Stage) fldPrezime.getScene().getWindow();
         driver = null;
+        Stage stage = (Stage) fldPrezime.getScene().getWindow();
         stage.close();
     }
 
@@ -44,7 +44,7 @@ public class DriverController {
         driver.setJMB(fldJMBG.getText());
         driver.setBirthDate(fldDateOfBirth.getValue());
         driver.setWorkDate(fldDateOfEmployment.getValue());
-        Stage stage = (Stage) fldIme.getScene().getWindow();
+        Stage stage = (Stage) fldJMBG.getScene().getWindow();
         stage.close();
     }
 
